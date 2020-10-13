@@ -1,0 +1,25 @@
+name: CI
+
+# Run this workflow every time a new commit pushed to your repository
+on: 
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build with ant
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Git tag
+        run: git tag -f snapshot && git push --tags -f
+      - uses: meeDamian/github-release@2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: latest-snapshot
+          prerelease: true
+          gzip: false
+          allow_override: true
+          files: test:test1
