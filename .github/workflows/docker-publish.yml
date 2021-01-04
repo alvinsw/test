@@ -24,6 +24,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: tag number
+        run : echo ${{ github.event.release.tag_name }}
+        
       - uses: actions/checkout@v2
 
       - name: Run tests
